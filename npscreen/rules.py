@@ -97,9 +97,14 @@ def run_rules(org, rules_config):
     if not filings:
         return []
     min_revenue = rules_config.get("min_revenue", 0)
+    ntee = (org.get("ntee_code") or "").upper()
     flags = []
     for name, fn in RULES.items():
         if name in rules_config:
+            # Some rules are routine for certain sectors (prefix match on NTEE code).
+            skip = rules_config[name].get("skip_ntee") or []
+            if any(ntee.startswith(p.upper()) for p in skip):
+                continue
             result = fn(filings, rules_config[name], min_revenue)
             if result:
                 flags.append(result)

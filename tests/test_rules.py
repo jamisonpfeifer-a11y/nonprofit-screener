@@ -3,8 +3,8 @@ from npscreen.rules import run_rules
 from tests.conftest import make_filing, make_org
 
 
-def flags_for(cfg, filings):
-    org = normalize_org(make_org(1, filings), cfg["fields"])
+def flags_for(cfg, filings, ntee="P20"):
+    org = normalize_org(make_org(1, filings, ntee=ntee), cfg["fields"])
     return {f["rule"] for f in run_rules(org, cfg["rules"])}
 
 
@@ -58,3 +58,11 @@ def test_persistent_deficit(cfg):
 
 def test_liabilities_exceed_assets(cfg):
     assert "liabilities_exceed_assets" in flags_for(cfg, [make_filing(2022, assets=100, liabilities=200)])
+
+
+def test_housing_orgs_skip_balance_sheet_rules(cfg):
+    years = [make_filing(y, revenue=1_000_000, expenses=1_200_000, assets=100, liabilities=200)
+             for y in (2022, 2021, 2020)]
+    assert flags_for(cfg, years, ntee="L22") & {"persistent_deficit", "liabilities_exceed_assets"} == set()
+    # Same numbers for a non-housing org still flag.
+    assert {"persistent_deficit", "liabilities_exceed_assets"} <= flags_for(cfg, years, ntee="P20")

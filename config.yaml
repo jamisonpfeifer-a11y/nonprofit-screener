@@ -41,8 +41,10 @@ rules:
   persistent_deficit:    # expenses > revenue for N consecutive years
     years: 3
     points: 1
+    skip_ntee: ["L2"]    # housing & retirement communities: mortgages/entrance fees make this routine
   liabilities_exceed_assets:
     points: 2
+    skip_ntee: ["L2"]
 
 peers:
   min_peers: 5
@@ -54,10 +56,10 @@ peers:
   # Materiality floors: a peer outlier only counts if the value is also high on its own.
   # Stops tiny values (e.g. 0.1% fundraising fees) scoring as outliers when most peers report 0.
   min_value:
-    officer_comp_share: 0.10     # officer comp >= 10% of expenses
+    officer_comp_share: 0.15     # officer comp >= 15% of expenses
     fundraising_fee_share: 0.10  # fundraising fees >= 10% of contributions
     expense_ratio: 1.20          # spending >= 120% of revenue
-  weight: 1.0
+  weight: 0.5            # one peer outlier shouldn't outweigh two rule flags
 
 scoring:
   # Soft saturation instead of a hard cap, so top results don't cluster at 10.0.

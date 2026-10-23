@@ -57,6 +57,7 @@ Tests run offline using synthetic filings.
 - Summary data covers a subset of the full Form 990. Related-party transactions (Schedule L) and named officer pay require the full e-file XML, which is a planned extension.
 - Ratios are skipped for very small organizations, where they're too noisy to mean much.
 - Thresholds are starting points and need tuning against real filings.
+- Some rules are skipped for housing and retirement communities (NTEE codes starting `L2`), where mortgages and resident entrance fees make deficits and liabilities above assets routine. This relies on NTEE codes, which are sometimes inaccurate: a retirement community coded under senior services (P75) will still be flagged.
 
 ## Data source
 
