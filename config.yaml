@@ -1,0 +1,64 @@
+# Nonprofit Screener configuration.
+# Thresholds are starting points, not settled judgments. Tune them against real filings.
+
+api:
+  base_url: https://projects.propublica.org/nonprofits/api/v2
+  timeout_seconds: 20
+  pause_seconds: 0.5     # polite delay between live API calls
+  max_retries: 3
+  cache_dir: .cache      # raw API responses are cached here to save calls
+
+# Map our metric names to ProPublica / IRS extract field names.
+# "default" applies to every form type; per-form entries override it.
+# Form types: 0 = Form 990, 1 = Form 990-EZ, 2 = Form 990-PF.
+# VERIFY these against real data first:  python -m npscreen inspect <EIN>
+fields:
+  default:
+    revenue: totrevenue
+    expenses: totfuncexpns
+    assets: totassetsend
+    liabilities: totliabend
+    officer_comp: compnsatncurrofcr
+    contributions: totcntrbgfts
+    fundraising_fees: profndraising
+  "2":
+    officer_comp: compofficers   # private foundations use a different key
+    contributions: grscontrgifts # 990-PF contributions field
+
+rules:
+  min_revenue: 250000    # ratio rules skip very small orgs (noisy ratios)
+  officer_comp_share:    # officer comp / total expenses
+    threshold: 0.25
+    points: 3
+  fundraising_fee_share: # professional fundraising fees / contributions
+    threshold: 0.35
+    points: 3
+  revenue_swing:         # year-over-year revenue change
+    up_ratio: 3.0
+    down_ratio: 0.25
+    min_prior_revenue: 100000  # skip new orgs ramping up from near zero
+    points: 2
+  persistent_deficit:    # expenses > revenue for N consecutive years
+    years: 3
+    points: 1
+  liabilities_exceed_assets:
+    points: 2
+
+peers:
+  min_peers: 5
+  # Revenue band edges; orgs are compared with others of similar size.
+  revenue_bands: [0, 500000, 2000000, 10000000, 50000000]
+  metrics: [officer_comp_share, fundraising_fee_share, expense_ratio]
+  z_threshold: 3.0       # robust z-score needed to count as a peer outlier
+  z_cap: 5.0             # stops one extreme metric from dominating
+  # Materiality floors: a peer outlier only counts if the value is also high on its own.
+  # Stops tiny values (e.g. 0.1% fundraising fees) scoring as outliers when most peers report 0.
+  min_value:
+    officer_comp_share: 0.10     # officer comp >= 10% of expenses
+    fundraising_fee_share: 0.10  # fundraising fees >= 10% of contributions
+    expense_ratio: 1.20          # spending >= 120% of revenue
+  weight: 1.0
+
+scoring:
+  # Soft saturation instead of a hard cap, so top results don't cluster at 10.0.
+  saturation: 8.0
