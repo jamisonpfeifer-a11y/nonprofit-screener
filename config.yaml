@@ -64,3 +64,26 @@ peers:
 scoring:
   # Soft saturation instead of a hard cap, so top results don't cluster at 10.0.
   saturation: 8.0
+
+# Full e-file XML from the IRS (Schedules J and L, Part VI governance, etc.).
+# Used by `org --efile` and `screen --efile-top N`. Form 990 only for now.
+efile:
+  base_url: https://apps.irs.gov/pub/epostcard/990/xml
+  index_years: [2026, 2025, 2024]   # yearly index files to search (newest first)
+  index_max_age_days: 30            # IRS updates the index monthly
+  cache_dir: .cache/irs
+  timeout_seconds: 60
+  rules:
+    contingent_comp:          # Schedule J lines 5a / 6a
+      revenue_points: 2
+      net_earnings_points: 3
+    insider_loans:            # Schedule L Part II, open balance
+      points: 2
+    governance_gaps:          # Part VI / Part XII answers
+      min_gaps: 3             # flag only when several gaps stack up
+      audit_expense_floor: 1000000   # only expect an audit/review above this size
+      points: 2
+    contractor_heavy:         # Part V: Forms 1099 vs W-2 employees (weak signal)
+      min_1099: 10
+      ratio: 3
+      points: 1

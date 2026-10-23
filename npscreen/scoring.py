@@ -7,7 +7,7 @@ import math
 
 
 def raw_points(org, peers_config):
-    rule_pts = sum(f["points"] for f in org.get("rule_flags", []))
+    rule_pts = sum(f["points"] for f in org.get("rule_flags", []) + org.get("efile_flags", []))
     peer_pts = sum(f["z"] for f in org.get("peer_flags", [])) * peers_config.get("weight", 1.0)
     return rule_pts + peer_pts
 

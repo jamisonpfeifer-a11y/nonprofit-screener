@@ -1,3 +1,5 @@
 requests>=2.31
 PyYAML>=6.0
+remotezip>=0.12
+inflate64>=1.0
 pytest>=8.0

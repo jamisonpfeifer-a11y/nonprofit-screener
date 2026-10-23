@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fictional organization and people. Structure mirrors a real 2024v5.2 Form 990 e-file. -->
+<Return xmlns="http://www.irs.gov/efile" returnVersion="2024v5.2">
+  <ReturnHeader>
+    <ReturnTypeCd>990</ReturnTypeCd>
+    <TaxPeriodBeginDt>2024-07-01</TaxPeriodBeginDt>
+    <TaxPeriodEndDt>2025-06-30</TaxPeriodEndDt>
+    <Filer><EIN>000000001</EIN><BusinessName><BusinessNameLine1Txt>EXAMPLE HELPERS INC</BusinessNameLine1Txt></BusinessName></Filer>
+  </ReturnHeader>
+  <ReturnData>
+    <IRS990>
+      <IRPDocumentCnt>30</IRPDocumentCnt>
+      <EmployeeCnt>2</EmployeeCnt>
+      <FamilyOrBusinessRlnInd>1</FamilyOrBusinessRlnInd>
+      <ConflictOfInterestPolicyInd>1</ConflictOfInterestPolicyInd>
+      <WhistleblowerPolicyInd>0</WhistleblowerPolicyInd>
+      <DocumentRetentionPolicyInd>0</DocumentRetentionPolicyInd>
+      <CompensationProcessCEOInd>0</CompensationProcessCEOInd>
+      <Form990PartVIISectionAGrp>
+        <PersonNm>JANE DOE</PersonNm>
+        <TitleTxt>PRESIDENT</TitleTxt>
+        <AverageHoursPerWeekRt>60.00</AverageHoursPerWeekRt>
+        <OfficerInd>X</OfficerInd>
+        <ReportableCompFromOrgAmt>300000</ReportableCompFromOrgAmt>
+        <ReportableCompFromRltdOrgAmt>0</ReportableCompFromRltdOrgAmt>
+        <OtherCompensationAmt>10000</OtherCompensationAmt>
+      </Form990PartVIISectionAGrp>
+      <Form990PartVIISectionAGrp>
+        <PersonNm>JOHN ROE</PersonNm>
+        <TitleTxt>TREASURER</TitleTxt>
+        <AverageHoursPerWeekRt>1.00</AverageHoursPerWeekRt>
+        <ReportableCompFromOrgAmt>0</ReportableCompFromOrgAmt>
+      </Form990PartVIISectionAGrp>
+      <CYTotalRevenueAmt>900000</CYTotalRevenueAmt>
+      <CYTotalExpensesAmt>1200000</CYTotalExpensesAmt>
+      <AccountantCompileOrReviewInd>0</AccountantCompileOrReviewInd>
+      <FSAuditedInd>0</FSAuditedInd>
+    </IRS990>
+    <IRS990ScheduleJ>
+      <CompBasedOnRevenueOfFlngOrgInd>1</CompBasedOnRevenueOfFlngOrgInd>
+      <CompBsdNetEarnsFlngOrgInd>0</CompBsdNetEarnsFlngOrgInd>
+    </IRS990ScheduleJ>
+    <IRS990ScheduleL>
+      <LoansBtwnOrgInterestedPrsnGrp>
+        <PersonNm>JANE DOE</PersonNm>
+        <RelationshipWithOrgTxt>PRESIDENT</RelationshipWithOrgTxt>
+        <LoanPurposeTxt>OPERATING COSTS</LoanPurposeTxt>
+        <LoanToOrganizationInd>X</LoanToOrganizationInd>
+        <OriginalPrincipalAmt>90000</OriginalPrincipalAmt>
+        <BalanceDueAmt>80000</BalanceDueAmt>
+        <BoardOrCommitteeApprovalInd>1</BoardOrCommitteeApprovalInd>
+        <WrittenAgreementInd>0</WrittenAgreementInd>
+      </LoansBtwnOrgInterestedPrsnGrp>
+      <LoansBtwnOrgInterestedPrsnGrp>
+        <PersonNm>JANE DOE</PersonNm>
+        <RelationshipWithOrgTxt>PRESIDENT</RelationshipWithOrgTxt>
+        <LoanPurposeTxt>TRAVEL</LoanPurposeTxt>
+        <LoanFromOrganizationInd>X</LoanFromOrganizationInd>
+        <OriginalPrincipalAmt>5000</OriginalPrincipalAmt>
+        <BalanceDueAmt>0</BalanceDueAmt>
+        <WrittenAgreementInd>1</WrittenAgreementInd>
+      </LoansBtwnOrgInterestedPrsnGrp>
+    </IRS990ScheduleL>
+  </ReturnData>
+</Return>
